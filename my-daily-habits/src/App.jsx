@@ -1,12 +1,20 @@
-import Footer from './components/Footer'
 import './App.css'
+import Footer from './components/Footer'
+import Habits from './components/Habits'
+import Button from './components/Button'
+import Header from './components/Header'
+import BemVindo from './components/BemVindo'
 
 function App() {
 
   return (
     <div>
-      <h1>My Daily Habits</h1>
-      <p>Gerencie seus hábitos diários de forma simples e visual.</p>
+
+      <Header titulo={"My Daily Habits"} descricao={"Gerencie seus hábitos diários de forma simples e visual."} />
+
+      <BemVindo nomeUsuario={"Álefe"} totalHabitos={1}/>    
+
+      {/*<Button name={"Clique aqui"}/>*/}
 
       <Footer/>
     </div>
