@@ -5,24 +5,18 @@ import BemVindo from './components/BemVindo'
 import SecaoHabitos from './components/SecaoHabitos'
 import HabitList from './components/HabitList'
 
-function App() {
 
-  const habits = [
-    {id: 1, titulo: "Exercício", meta: 5, ativo: true, diasFeitos: 5, categoria: "Saúde"},
-    {id: 2, titulo: "Leitura", meta: 7, ativo: true, diasFeitos: 3},
-    {id: 3, titulo: "Meditação", meta: 7, ativo: false, diasFeitos: 0},
-    {id: 4, titulo: "Hidratação", meta: 5, ativo: true, diasFeitos: 7}
-  ];
+function App() {
 
   return (
     <div>
 
       <Header titulo={"My Daily Habits"} descricao={"Gerencie seus hábitos diários de forma simples e visual."} />
 
-      <BemVindo nomeUsuario={"Álefe"} totalHabitos={habits.length}/> 
+      <BemVindo nomeUsuario={"Álefe"} /*totalHabitos={habits.length}*//> 
 
       <SecaoHabitos titulo={"Meus Hábitos"}>
-        <HabitList habits={habits}></HabitList>
+        <HabitList></HabitList>
       </SecaoHabitos>
 
       <Footer/>
