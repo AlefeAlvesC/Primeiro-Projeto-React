@@ -7,13 +7,25 @@ import HabitList from './components/HabitList'
 
 
 function App() {
+  {/*
+  function tamanhoArray(){
+    const stored = localStorage.getItem("my-daily-habits");
+    
+    try{
+      return JSON.parse(stored);
+    }catch{
+      return [];
+    };
+  };
+  */}
+
 
   return (
     <div>
 
       <Header titulo={"My Daily Habits"} descricao={"Gerencie seus hábitos diários de forma simples e visual."} />
 
-      <BemVindo nomeUsuario={"Álefe"} /*totalHabitos={habits.length}*//> 
+      <BemVindo nomeUsuario={"Álefe"} /*totalHabitos={tamanhoArray().length}*//> 
 
       <SecaoHabitos titulo={"Meus Hábitos"}>
         <HabitList></HabitList>
