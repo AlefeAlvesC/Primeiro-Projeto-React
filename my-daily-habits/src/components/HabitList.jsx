@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import HabitsCard from "./HabitCard";
 
 export default function HabitList(){
@@ -19,13 +19,48 @@ export default function HabitList(){
         }; 
     });
 
+    const [form, setForm] = useState({
+        novoNome: "",
+        novaDescricao: "",
+        novaCategoria: "",
+        novaMeta: ""
+    });
+
+    const [erro, setErro] = useState({
+        erroNome: "",
+        erroMeta: ""
+    })
+
+
     useEffect(() => {
         localStorage.setItem("my-daily-habits", JSON.stringify(habits));
     }, [habits]);
 
-    const [novoNome, setNovoNome] = useState("");
-    const [novaDescricao, setNovaDescricao] = useState("");
-    const [novaCategoria, setNovaCategoria] = useState("");
+    const nomeInput = useRef(null);
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+
+        if (name === "novoNome"){
+            setForm(prev => ({...prev, [name]: value}));
+            if(value.length > 0 && value.length < 3 ){
+                setErro(prev => ({...prev, erroNome: "O nome deve ter pelo menos 3 caracteres."}));
+            }else{
+                setErro(prev => ({...prev, erroNome: ""}));
+            }    
+        }
+
+        if (name === "novaMeta"){
+            setForm(prev => ({...prev, [name]: value}));
+            if(value < 1 || value > 7){
+                setErro(prev => ({...prev, erroMeta: "Meta deve estar entre 1 e 7 dias."}));
+            }else{
+                setErro(prev => ({...prev, erroMeta: ""}));
+            }
+        }
+
+        setForm(prev => ({...prev, [name]: value}));
+    };
 
     const removerHabit = (id) => {
         setHabits(habits.filter(habit => habit.id !== id));
@@ -34,26 +69,32 @@ export default function HabitList(){
     const adicionarHabit = (event) => {
         event.preventDefault();
         
-        if (!novoNome.trim()){
+        if (!form.novoNome.trim()){
             alert("Informe um nome para o hábito");
+            return;
+        }
+
+
+        if(erro.erroNome){
+            nomeInput.current?.focus();
             return;
         }
 
         const novoHabit = {
             id : Date.now(),
-            nome : novoNome,
-            descricao : novaDescricao,
+            titulo : form.novoNome,
+            descricao : form.novaDescricao,
             meta : 7,
             ativo: true,
             diasFeitos: 0,
-            categoria: novaCategoria || 'Geral'
+            categoria: form.novaCategoria || 'Geral'
         }
 
         setHabits([...habits, novoHabit]);
     
-        setNovoNome('');
-        setNovaDescricao('');
-        setNovaCategoria("");
+        setForm({ novoNome: "", novaDescricao: "", novaCategoria: "", novaMeta: "" })
+
+        nomeInput.current?.focus();
     }
     
     const limparHistorico = () => {
@@ -65,38 +106,43 @@ export default function HabitList(){
             {id: 4, titulo: "Hidratação", descricao: "Beber 2 litros de água", meta: 5, ativo: true, diasFeitos: 7}
         ]);
     }
-    
-    if (!habits) return null;
-
-    if (habits.lenght === 0) {
-        return <p>Nenhum hábito cadastrado ainda. Que tal começar?</p>
-    }
 
     return (
         <section>
             <form onSubmit={adicionarHabit} className="habit-form">
                 <div className="form-question">
                     <label htmlFor="nome">Nome do hábito *</label>
-                    <input type="text" name="nome" id="nome" 
-                        value={novoNome} 
-                        onChange={(e) => setNovoNome(e.target.value)}
+                    <input type="text" name="novoNome" id="nome" 
+                        value={form.novoNome} 
+                        onChange={handleChange}
+                        ref={nomeInput}
                     />
+                    {erro.erroNome && <p style={{color: "red", fontSize: "0.8rem"}}>{erro.erroNome}</p>}
                 </div>
                    
                 <div className="form-question">
                     <label htmlFor="descricao">Descrição</label>
-                    <input type="text" name="descricao" id="descricao" 
-                        value={novaDescricao} 
-                        onChange={(e) => setNovaDescricao(e.target.value)}
+                    <input type="text" name="novaDescricao" id="descricao" 
+                        value={form.novaDescricao} 
+                        onChange={handleChange}
                     />
                 </div>
 
                 <div className="form-question">
                     <label htmlFor="categoria">Categoria</label>
-                    <input type="text" name="categoria" id="categoria"
-                        value={novaCategoria}
-                        onChange={(e) => setNovaCategoria(e.target.value)}
+                    <input type="text" name="novaCategoria" id="categoria"
+                        value={form.novaCategoria}
+                        onChange={handleChange}
                     />
+                </div>
+
+                <div className="form-question">
+                    <label htmlFor="meta">Meta</label>
+                    <input type="number" name="novaMeta" id="meta"
+                        value={form.novaMeta}
+                        onChange={handleChange}
+                    />
+                    {erro.erroMeta && <p style={{color: "red", fontSize: "0.8rem"}}>{erro.erroMeta}</p>}
                 </div>
 
                 <button type="submit">Adicionar Hábito</button>
@@ -105,6 +151,10 @@ export default function HabitList(){
             {habits.length == 0 && <p>Nenhum hábito cadastrado ainda. Que tal começar?</p> }
 
             <ul>
+                {(habits.lenght === 0) 
+                && 
+                <p>Nenhum hábito cadastrado ainda. Que tal começar?</p>}
+
                 {habits.map((habit) => (
                     <HabitsCard
                         key={habit.id}
