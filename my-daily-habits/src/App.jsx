@@ -4,35 +4,30 @@ import Header from './components/Header'
 import BemVindo from './components/BemVindo'
 import SecaoHabitos from './components/SecaoHabitos'
 import HabitList from './components/HabitList'
+import { HabitsProvider } from './contexts/HabitsContext'
 
 
 function App() {
-  {/*
-  function tamanhoArray(){
-    const stored = localStorage.getItem("my-daily-habits");
-    
-    try{
-      return JSON.parse(stored);
-    }catch{
-      return [];
-    };
-  };
-  */}
 
 
   return (
-    <div>
 
-      <Header titulo={"My Daily Habits"} descricao={"Gerencie seus hábitos diários de forma simples e visual."} />
+    <HabitsProvider>
 
-      <BemVindo nomeUsuario={"Álefe"} /*totalHabitos={tamanhoArray().length}*//> 
+      <div>
+        <Header titulo={"My Daily Habits"} descricao={"Gerencie seus hábitos diários de forma simples e visual."} />
 
-      <SecaoHabitos titulo={"Meus Hábitos"}>
-        <HabitList></HabitList>
-      </SecaoHabitos>
+        <BemVindo nomeUsuario={"Álefe"} /> 
 
-      <Footer/>
-    </div>
+        <SecaoHabitos titulo={"Meus Hábitos"}>
+          <HabitList></HabitList>
+        </SecaoHabitos>
+
+        <Footer/>
+      </div>
+
+    </HabitsProvider>
+    
   )
 }
 
