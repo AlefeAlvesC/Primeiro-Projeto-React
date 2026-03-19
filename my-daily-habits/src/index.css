@@ -75,6 +75,12 @@ main, section {
   grid-template-rows: 6fr 1fr;
 }
 
+.habit-card .buttons{
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 15px;
+}
+
 .habit-card button{
   background-color: #111827;
   color: #f9fafb;

@@ -3,7 +3,7 @@ import HabitsCard from "./HabitCard";
 import { useHabits } from "../contexts/HabitsContext";
 
 export default function HabitList(){
-    const { habits, adicionarHabit, removerHabit} = useHabits();
+    const { habits, adicionarHabit, removerHabit, toggleAtivo, limparHistorico} = useHabits();
     
     const [form, setForm] = useState({
         novoNome: "",
@@ -70,17 +70,13 @@ export default function HabitList(){
         removerHabit(id);
     }
 
-    /*
-    const limparHistorico = () => {
-        localStorage.removeItem("my-daily-habits");
-        setHabits([
-            {id: 1, titulo: "Exercício", descricao: "Treino de Força", meta: 5, ativo: true, diasFeitos: 5, categoria: "Saúde"},
-            {id: 2, titulo: "Leitura", descricao: "Livro ou artigo", meta: 7, ativo: true, diasFeitos: 3},
-            {id: 3, titulo: "Meditação", descricao: "Respiração e foco", meta: 7, ativo: false, diasFeitos: 0},
-            {id: 4, titulo: "Hidratação", descricao: "Beber 2 litros de água", meta: 5, ativo: true, diasFeitos: 7}
-        ]);
+    const handleToggle = (id) => {
+        toggleAtivo(id);
     }
-    */
+
+    const handleHistorico = () => {
+        limparHistorico();
+    }
 
     if(!habits) return null;
 
@@ -139,12 +135,13 @@ export default function HabitList(){
                         diasFeitos={habit.diasFeitos}
                         categoria={habit.categoria}
                         onRemover={() => handleRemove(habit.id)}
+                        onToggle={() => handleToggle(habit.id)}
                     />
                 ))}
             </ul>
 
             {/*Botão de reset do localStorage*/}
-            {/*limparHistorico && <button onClick={limparHistorico}>Limpar Histórico</button>*/}
+            {limparHistorico && <button onClick={limparHistorico}>Limpar Histórico</button>}
             
         </section>
     )

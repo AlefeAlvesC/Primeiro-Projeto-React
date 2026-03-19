@@ -1,4 +1,4 @@
-export default function HabitsCard({titulo, descricao = "", meta, ativo = true, diasFeitos = 0, categoria = "Geral", onRemover}) {
+export default function HabitsCard({titulo, descricao = "", meta, ativo = true, diasFeitos = 0, categoria = "Geral", onRemover, onToggle}) {
     const metaAtingida = diasFeitos >= meta;
     const mensagemMeta = metaAtingida ? "🏆 Meta da semana atingida!" : `${diasFeitos} de ${meta} dias concluídos`;
     
@@ -14,12 +14,20 @@ export default function HabitsCard({titulo, descricao = "", meta, ativo = true, 
                 {metaAtingida && <p>⭐ Parabéns, você manteve a sequência essa semana!</p>}
             </div>
             
+            <div className="buttons">
+                {onRemover && (
+                    <button type="button" onClick={onRemover}>
+                        Remover Hábito
+                    </button>
+                )}
+
+                {onToggle && (
+                    <button type="button" onClick={onToggle}>
+                        {ativo ? "Pausar" : "Ativar"}
+                    </button>
+                )}
+            </div>
             
-            {onRemover && (
-                <button type="button" onClick={onRemover}>
-                    Remover Hábito
-                </button>
-            )}
         </div>
     )    
 };
