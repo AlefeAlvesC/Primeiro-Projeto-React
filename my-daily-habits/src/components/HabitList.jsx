@@ -1,10 +1,13 @@
-import { useState, useRef, useContext } from "react";
-import HabitsCard from "./HabitCard";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import HabitCard from "./HabitCard";
 import { useHabits } from "../contexts/HabitsContext";
 
 export default function HabitList(){
     const { habits, adicionarHabit, removerHabit, toggleAtivo, limparHistorico} = useHabits();
     
+    const navigate = useNavigate();
+
     const [form, setForm] = useState({
         novoNome: "",
         novaDescricao: "",
@@ -21,9 +24,9 @@ export default function HabitList(){
 
     const handleChange = (e) => {
         const {name, value} = e.target;
+        setForm(prev => ({...prev, [name]: value}));
 
         if (name === "novoNome"){
-            setForm(prev => ({...prev, [name]: value}));
             if(value.length > 0 && value.length < 3 ){
                 setErro(prev => ({...prev, erroNome: "O nome deve ter pelo menos 3 caracteres."}));
             }else{
@@ -32,15 +35,12 @@ export default function HabitList(){
         }
 
         if (name === "novaMeta"){
-            setForm(prev => ({...prev, [name]: value}));
             if(value < 1 || value > 7){
                 setErro(prev => ({...prev, erroMeta: "Meta deve estar entre 1 e 7 dias."}));
             }else{
                 setErro(prev => ({...prev, erroMeta: ""}));
             }
         }
-
-        setForm(prev => ({...prev, [name]: value}));
     };
 
     const handleSubmit = (event) => {
@@ -54,7 +54,7 @@ export default function HabitList(){
             id : Date.now(),
             titulo : form.novoNome,
             descricao : form.novaDescricao,
-            meta : form.novaMeta || 7,
+            meta : parseInt(form.novaMeta) || 7,
             ativo: true,
             diasFeitos: 0,
             categoria: form.novaCategoria || 'Geral'
@@ -63,7 +63,7 @@ export default function HabitList(){
         adicionarHabit(novoHabit);
 
         setForm({novoNome: "", novaDescricao: "", novaCategoria: "", novaMeta: ""});
-        nomeInput.current?.focus();
+        navigate("/habitos");
     }
     
     const handleRemove = (id) => {
@@ -126,8 +126,9 @@ export default function HabitList(){
             <ul>
 
                 {habits.map((habit) => (
-                    <HabitsCard
+                    <HabitCard
                         key={habit.id}
+                        id={habit.id}
                         titulo={habit.titulo}
                         descricao={habit.descricao}
                         meta={habit.meta}
@@ -141,7 +142,7 @@ export default function HabitList(){
             </ul>
 
             {/*Botão de reset do localStorage*/}
-            {limparHistorico && <button onClick={limparHistorico}>Limpar Histórico</button>}
+            {limparHistorico && <button onClick={handleHistorico}>Limpar Histórico</button>}
             
         </section>
     )
