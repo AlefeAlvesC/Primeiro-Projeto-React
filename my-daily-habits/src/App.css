@@ -5,57 +5,11 @@
   padding: 0;
   /*padding: 2rem*/
   text-align: center;
-
   /*Novas alterações*/
 }
 
-.habit-form{
-  background-color: #ffffff;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
-  margin-bottom: 16px;
-}
 
-.form-question {
-  display: grid;
-  grid-template-areas: 
-  "label input"
-  "erro erro";
-  grid-template-columns: 1fr 5fr;
-}
-
-.habit-form label {
-  text-align: left;
-  margin: 8px 0;
-  font-size: 0.9rem;
-  grid-area: label;
-}
-
-.habit-form input {
-  padding: 6px 8px;
-  margin: 4px;
-  border-radius: 4px;
-  border: 1px solid #d4d4d8;
-  font-size: 0.9rem;
-  grid-area: input;
-}
-
-.habit-form p {
-  grid-area: erro;
-  margin: 5px;
-}
-
-.habit-form button {
-  margin-top: 8px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  border: none;
-  background-color: #111827;
-  color: #f9fafb;
-  cursor: pointer;
-}
-
+/*
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -93,3 +47,4 @@
 .read-the-docs {
   color: #888;
 }
+*/
