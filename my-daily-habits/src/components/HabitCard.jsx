@@ -22,13 +22,13 @@ export default function HabitCard({id, titulo, descricao = "", meta, ativo = tru
                 </Link>
 
                 {onRemover && (
-                    <button type="button" onClick={onRemover} className="btn-remover-card">
+                    <button type="button" onClick={onRemover} className="btn-primario btn-remover-card">
                         Remover Hábito
                     </button>
                 )}
 
                 {onToggle && (
-                    <button type="button" onClick={onToggle} className="btn-toggle-card">
+                    <button type="button" onClick={onToggle} className="btn-primario btn-toggle-card">
                         {ativo ? "Pausar" : "Ativar"}
                     </button>
                 )}

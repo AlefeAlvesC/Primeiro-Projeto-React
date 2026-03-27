@@ -10,11 +10,14 @@ function PaginaDetalhes (){
 
     if(!habit){
         return(
-            <main className="pagina-detalhes">
+            <main className="pagina-detalhes no-habits">
                 <h1>Hábito não encontrado</h1>
-                <button onClick={() => navigate("/habitos")}>
-                    ← Voltar para a lista
-                </button>
+                <div>
+                    <button onClick={() => navigate("/habitos")} className="btn-primario btn-voltar">
+                        ← Voltar para a lista
+                    </button>
+                </div>
+
             </main>
         );
     }
@@ -28,34 +31,36 @@ function PaginaDetalhes (){
 
     return (
         <main className="pagina-detalhes">
-            <button onClick={() => navigate(-1)} className="btn-voltar">
-                ← Voltar
-            </button>
-
-            <div className="detalhe-card">
+            <div>
                 <h1>{habit.titulo}</h1>
                 <p>{habit.descricao}</p>
 
-                <ul>
-                    <li><strong>Categoria:</strong> {habit.categoria || "Geral"}</li>
-                    <li><strong>Meta semanal:</strong> {habit.meta} dias</li>
-                    <li><strong>Dias feitos:</strong> {habit.diasFeitos} </li>
-                    <li>
-                        <strong>Status:</strong> {''}
-                        <span>
-                            {habit.ativo ? "✅ Ativo" : "⏸️ Pausado"}
-                        </span>
-                    </li>
+            </div>
+            
+            <ul>
+                <li><strong>Categoria: </strong><span>{habit.categoria || "Geral"}</span></li>
+                <li><strong>Meta semanal: </strong><span>{habit.meta} dias</span></li>
+                <li><strong>Dias feitos: </strong><span>{habit.diasFeitos}</span></li>
+                <li>
+                    <strong>Status: </strong> {''}
+                    <span>
+                        {habit.ativo ? "✅ Ativo" : "⏸️ Pausado"}
+                    </span>
+                </li>
 
-                    {
-                        metaAtingida && (<li> 🏆 Meta da semana atingida!</li>)
-                    }
-                </ul>
+                {
+                    metaAtingida && (<li style={{gridColumnStart: "1", gridColumnEnd: "3"}}> 🏆 Meta da semana atingida!</li>)
+                }
+            </ul>
 
-                <button onClick={handleRemover} className="btn-remover">
-                    Remover hábito
+            <div className="btns-detalhe">
+                <button onClick={() => navigate(-1)} className="btn-primario btn-voltar">
+                    ← Voltar
                 </button>
 
+                <button onClick={handleRemover} className="btn-primario btn-remover">
+                    Remover hábito
+                </button>
             </div>
 
         </main>

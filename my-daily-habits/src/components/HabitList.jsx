@@ -81,7 +81,7 @@ export default function HabitList(){
     if(!habits) return null;
 
     return (
-        <section>
+        <>
             <form onSubmit={handleSubmit} className="habit-form">
                 <div className="form-question">
                     <label htmlFor="nome">Nome do hábito *</label>
@@ -118,7 +118,7 @@ export default function HabitList(){
                     {erro.erroMeta && <p style={{color: "red", fontSize: "0.8rem"}}>{erro.erroMeta}</p>}
                 </div>
 
-                <button type="submit">Adicionar Hábito</button>
+                <button className="btn-primario" type="submit">Adicionar Hábito</button>
             </form>
 
             {habits.length === 0 && <p>Nenhum hábito cadastrado ainda. Que tal começar?</p> }
@@ -142,8 +142,8 @@ export default function HabitList(){
             </ul>
 
             {/*Botão de reset do localStorage*/}
-            {limparHistorico && <button onClick={handleHistorico}>Limpar Histórico</button>}
+            {limparHistorico && <button className="btn-primario" onClick={handleHistorico}>Limpar Histórico</button>}
             
-        </section>
+        </>
     )
 };
